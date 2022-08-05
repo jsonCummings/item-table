@@ -71,7 +71,19 @@ export const ItemTable = (props) => {
     // console.log('items after set', items, selectedItems);
   }
 
-  console.log('render', itemsArray, selectedItems);
+  const downloadSelected = () => {
+    // check if it can be downloaded, alert path & device
+    if (selectedItems.length >= 1) {
+      if (selectedItems.every((item => checkIfAvailable(item.status)))){
+        let windowString = selectedItems.map((item => `path: ${item.path} device: ${item.device}\n`));
+        alert(windowString);
+      } else {
+        alert('Not all selected files are available for download. Please unselect those with the status scheduled');
+      }
+    }
+  }
+
+  // console.log('render', itemsArray, selectedItems);
   return (
     <div>
         <table className="itemTable">
@@ -90,7 +102,7 @@ export const ItemTable = (props) => {
                       {displayNumberSelected()}
                     </th>
                     <th>
-                      <span>
+                      <span onClick={() => downloadSelected()}>
                         &#10515; Download Selected
                       </span> 
                     </th>
