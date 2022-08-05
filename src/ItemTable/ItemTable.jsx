@@ -41,6 +41,15 @@ export const ItemTable = (props) => {
     }
   }
 
+  const displayNumberSelected = useCallback(() => {
+    const length = selectedItems.length;
+    if (length === 0){
+        return 'None Selected';
+    } else {
+        return `${length} Selected`;
+    }
+  }, [selectedItems, itemsArray]);
+
   const handleCheckEvent = (item) => {
     const {name, checked} = item;
     setItems(items => (
@@ -72,14 +81,18 @@ export const ItemTable = (props) => {
                     <th>
                         {someSelected() && (<input type="checkbox"
                         ref={indeterminateState}
-                        onClick={() => selectAllItems()}/>)}
+                        onChange={() => selectAllItems()}/>)}
                         {!someSelected() && (<input type="checkbox"
                         checked={allSelected()}
-                        onClick={() => selectAllItems()}/>)}
+                        onChange={() => selectAllItems()}/>)}
                     </th> 
-                    <th></th>
                     <th>
-                      <span>&#10515;</span> Download Selected
+                      {displayNumberSelected()}
+                    </th>
+                    <th>
+                      <span>
+                        &#10515; Download Selected
+                      </span> 
                     </th>
                 </tr>
                 <tr>
