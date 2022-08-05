@@ -1,7 +1,14 @@
 import React from 'react';
+import './itemTable.css';
 
 export const ItemTable = (props) => {
     const itemsArray = props.itemsArray;
+
+    const checkIfAvailable = (itemStatus) => {
+        return itemStatus.toLowerCase().indexOf('available') > -1;
+    }
+
+    console.log('render', itemsArray);
     return (
         <div>
             <table className="itemTable">
@@ -33,7 +40,7 @@ export const ItemTable = (props) => {
                                 <td>{name}</td>
                                 <td>{device}</td>
                                 <td>{path}</td>
-                                <td>green dot</td>
+                                <td>{checkIfAvailable(status) ? <span className="green-dot"></span> : null}</td>
                                 <td>{status}</td>
                             </tr>
                         )

@@ -1,0 +1,7 @@
+.green-dot {
+    height: 14px;
+    width: 14px;
+    border-radius: 50%;
+    display: inline-block;
+    background-color: hsl(80, 72%, 48%);
+}
