@@ -1,26 +1,78 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './itemTable.css';
 
 export const ItemTable = (props) => {
-    const itemsArray = props.itemsArray;
+  const [itemsArray, setItems] = useState(props.itemsArray);
+  const [selectedItems, setSelectedItems] = useState([]);
 
-    const checkIfAvailable = (itemStatus) => {
-        return itemStatus.toLowerCase().indexOf('available') > -1;
+
+  const allSelected = () => {
+    return itemsArray.every((item => item?.checked && item.checked))
+  }
+
+  const checkIfAvailable = (itemStatus) => {
+    return itemStatus.toLowerCase().indexOf('available') > -1;
+  }
+
+  const selectAllItems = () => {
+    // if all are selected unselect
+    // if not all selected will turn all items to selected state
+    if(allSelected()) {
+      setItems(items => (
+        items.map( item => {
+          return {...item, checked: false};
+        })
+      ))
+      setSelectedItems([]);
+    } else {
+        setItems(items => (
+            items.map( item => {
+                return {...item, checked: true};
+            })
+        ))
+        setSelectedItems(itemsArray);
+    }
+  }
+
+  const handleCheckEvent = (item) => {
+    // console.log('clicked', item, checked);
+    const {name, device, path, status, checked} = item;
+    setItems(items => (
+      items.map( item => {
+        if (item.name === name) {
+          return item?.checked ? {...item, checked: !checked} : {...item, checked: true};
+        } else {
+          return {...item};
+        }
+      })
+    ))
+    if (selectedItems.length > 0 && (selectedItems.findIndex(existing => existing.name === item.name) > -1)) {
+      setSelectedItems(selectedItems.filter( existing => existing.name !== item.name));
+      // console.log('duplicate', selectedItems);
+    } else {
+      setSelectedItems(items => [...items, item]);
     }
 
-    console.log('render', itemsArray);
+    // console.log('items after set', items, selectedItems);
+  }
+
+    console.log('render', itemsArray, selectedItems);
     return (
         <div>
             <table className="itemTable">
                 <thead>
                     <tr>
                         {/* needs all selected, some selected, none selected   value={selectAllInput}*/}
-                        <th><input type="checkbox" /></th> 
+                        <th>
+                          <input type="checkbox" onClick={() => selectAllItems()}/>
+                        </th>
                         <th></th>
-                        <th><span>&#10515;</span> Download Selected</th>
+                        <th>
+                          <span>&#10515;</span> Download Selected
+                        </th>
                     </tr>
                     <tr>
-                        <th></th>
+                        <th/>
                         <th>Name</th>
                         <th>Device</th>
                         <th>Path</th>
@@ -30,11 +82,14 @@ export const ItemTable = (props) => {
                 </thead>
                 <tbody>
                     {itemsArray && itemsArray.map((item) =>{
-                        const {name, device, path, status} = item;
+                        const {name, device, path, status, checked} = item;
                         return (
                             <tr key={name}>
                                 <td>
                                     <input type="checkbox"
+                                        checked={checked}
+                                        onChange={e => handleCheckEvent(item)} 
+                                        value={name}
                                     />
                                 </td>
                                 <td>{name}</td>
@@ -48,5 +103,5 @@ export const ItemTable = (props) => {
                 </tbody>
             </table>
         </div>
-    )
+  )
 }
