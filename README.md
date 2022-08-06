@@ -1,7 +1,11 @@
 # item-table
 quick component to show a table with items
 
-# Getting Started with Create React App
+# Getting Started with item-table
+
+this package has been published to npm as `item-table-jsoncummings`
+
+
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
