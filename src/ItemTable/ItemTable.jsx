@@ -12,7 +12,6 @@ export const ItemTable = (props) => {
     return !!(selectedItems.length && (itemsArray.length !== selectedItems.length));
   }
   const indeterminateState = useCallback( el => {
-    console.log('flip table', el, someSelected());
     if (el && someSelected()) {
         el.indeterminate = someSelected();
     } 
@@ -80,6 +79,10 @@ export const ItemTable = (props) => {
     }
   }
 
+  const selectedRow = (index) => {
+    return itemsArray[index]?.checked && itemsArray[index].checked;
+  }
+
   return (
     <div>
         <table className="itemTable">
@@ -115,14 +118,16 @@ export const ItemTable = (props) => {
                 </tr>
             </thead>
             <tbody className='fontSize-14 textAlign-left hoverTable'>
-                {itemsArray && itemsArray.map((item) =>{
+              {/* TODO: break this out into a separate component */}
+                {itemsArray && itemsArray.map((item, index) =>{
                     const {name, device, path, status, checked} = item;
                     return (
-                        <tr key={name}>
+                        <tr key={name} className={selectedRow(index) ? 'selectedRow' : null} >
                             <td className='width-5 textAlign-center'>
+                              {/* TODO: break this out into a separate component */}
                                 <input type="checkbox"
                                     checked={checked}
-                                    onChange={e => handleCheckEvent(item)} 
+                                    onChange={() => handleCheckEvent(item)} 
                                     value={name}
                                 />
                             </td>

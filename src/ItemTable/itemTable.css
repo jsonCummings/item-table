@@ -1,3 +1,5 @@
+/* TODO: make this not as much of a mess and remove global css to another file */
+
 .itemTable { 
     width: 100%;
     border-collapse: collapse;
@@ -13,6 +15,10 @@
 
 .hoverTable tr:hover {
     background-color: #d3d3d3;
+}
+
+.selectedRow {
+    background-color: #aaa;
 }
 
 .green-dot {
