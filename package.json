@@ -1,8 +1,20 @@
 {
-  "name": "item-table",
+  "name": "item-table-jsoncummings",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
+  "author": "jsonCummings",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jsonCummings/item-table.git"
+  },
   "dependencies": {
+    "@babel/polyfill": "^7.12.1",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",
@@ -13,7 +25,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "rm -rf dist && NODE_ENV=production babel src/lib --out-dir dist --copy-files",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -34,5 +46,16 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.18.10",
+    "@babel/core": "^7.18.10",
+    "@babel/preset-env": "^7.18.10"
+  },
+  "description": "quick component to show a table with items",
+  "bugs": {
+    "url": "https://github.com/jsonCummings/item-table/issues"
+  },
+  "homepage": "https://github.com/jsonCummings/item-table#readme",
+  "license": "ISC"
 }
