@@ -63,12 +63,9 @@ export const ItemTable = (props) => {
     ))
     if (selectedItems.length > 0 && (selectedItems.findIndex(existing => existing.name === item.name) > -1)) {
       setSelectedItems(selectedItems.filter( existing => existing.name !== item.name));
-      // console.log('duplicate', selectedItems);
     } else {
       setSelectedItems(items => [...items, item]);
     }
-
-    // console.log('items after set', items, selectedItems);
   }
 
   const downloadSelected = () => {
@@ -83,45 +80,46 @@ export const ItemTable = (props) => {
     }
   }
 
-  // console.log('render', itemsArray, selectedItems);
   return (
     <div>
         <table className="itemTable">
             <thead>
-                <tr>
-                    {/* needs all selected, some selected, none selected*/}
-                    <th>
+                <tr className='fontSize-22' >
+                    <td className='width-5'>
                         {someSelected() && (<input type="checkbox"
                         ref={indeterminateState}
                         onChange={() => selectAllItems()}/>)}
                         {!someSelected() && (<input type="checkbox"
                         checked={allSelected()}
                         onChange={() => selectAllItems()}/>)}
-                    </th> 
-                    <th>
+                    </td> 
+                    <td className='fontWeight-normal width-20'>
                       {displayNumberSelected()}
-                    </th>
-                    <th>
-                      <span onClick={() => downloadSelected()}>
-                        &#10515; Download Selected
+                    </td>
+                    <div className="inlineBlock overflowX-visible colspan-0">
+                      <span className="fontWeight-bold clickable" onClick={() => downloadSelected()}>
+                        &#10515; 
                       </span> 
-                    </th>
+                      <span className='fontWeight-normal'>
+                         Download Selected
+                      </span>
+                    </div>
                 </tr>
-                <tr>
+                <tr className='fontSize-18 textAlign-left'>
                     <th/>
-                    <th>Name</th>
-                    <th>Device</th>
-                    <th>Path</th>
+                    <th className='fontWeight-normal width-20'>Name</th>
+                    <th className='fontWeight-normal'>Device</th>
+                    <th className='fontWeight-normal'>Path</th>
                     <th/>
-                    <th>Status</th>
+                    <th className='fontWeight-normal'>Status</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody className='fontSize-14 textAlign-left hoverTable'>
                 {itemsArray && itemsArray.map((item) =>{
                     const {name, device, path, status, checked} = item;
                     return (
                         <tr key={name}>
-                            <td>
+                            <td className='width-5 textAlign-center'>
                                 <input type="checkbox"
                                     checked={checked}
                                     onChange={e => handleCheckEvent(item)} 
@@ -131,8 +129,8 @@ export const ItemTable = (props) => {
                             <td>{name}</td>
                             <td>{device}</td>
                             <td>{path}</td>
-                            <td>{checkIfAvailable(status) ? <span className="green-dot"></span> : null}</td>
-                            <td>{status}</td>
+                            <td className='textAlign-right'>{checkIfAvailable(status) ? <span className="green-dot"></span> : null}</td>
+                            <td>{status[0].toUpperCase() + status.substring(1)}</td>
                         </tr>
                     )
                 })}

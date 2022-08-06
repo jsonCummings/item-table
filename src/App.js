@@ -1,5 +1,5 @@
-import './App.css';
 import { ItemTable } from './ItemTable/ItemTable';
+import './App.css';
 
 function App() {
   const filesArray = [
@@ -12,7 +12,9 @@ function App() {
 
   return (
     <div className="App">
+      <div className='App-body App-margin'>
       <ItemTable itemsArray={filesArray}></ItemTable>
+      </div>
     </div>
   );
 }

@@ -1,7 +1,80 @@
+.itemTable { 
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid rgb(149, 170, 192);
+    font-family: Roboto, sans-serif;
+    color: darkslategrey;
+}
+
+.itemTable tr {
+    border-bottom: 1px solid rgb(149, 170, 192);
+    /* padding: 10px; */
+}
+
+.hoverTable tr:hover {
+    background-color: #d3d3d3;
+}
+
 .green-dot {
     height: 14px;
     width: 14px;
     border-radius: 50%;
     display: inline-block;
     background-color: hsl(80, 72%, 48%);
+    margin-right: 8px;
+}
+
+.inlineBlock {
+    display: inline-block;
+}
+
+.width-5 {
+    width:5%;
+}
+.width-10 {
+    width:10%;
+}
+.width-20 {
+    width:20%;
+}
+
+.fontSize-22 {
+    font-size: 20px;  
+    line-height: 3; 
+}
+
+.fontSize-18 {
+    font-size: 16px;
+    line-height: 2.8;
+}
+
+.fontSize-14 {
+    font-size: 14px;
+    line-height: 3;
+}
+
+.textAlign-left {
+    text-align: left;
+}
+.textAlign-right {
+    text-align: right;
+}
+
+.fontWeight-normal {
+    font-weight: 400;
+}
+.fontWeight-bold {
+    font-weight: 800;
+}
+.stretchFont {
+    font-stretch:wider;
+}
+
+.textAlign-center {
+    text-align: center;
+}
+
+.clickable {
+    cursor: pointer;
+    padding: 0 8px;
 }
