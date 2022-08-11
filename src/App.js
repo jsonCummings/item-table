@@ -1,4 +1,4 @@
-import { ItemTable } from './ItemTable/ItemTable';
+import { ItemTable } from './components/ItemTable/ItemTable';
 import './App.css';
 
 function App() {
