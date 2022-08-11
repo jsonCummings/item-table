@@ -4,6 +4,20 @@ quick component to show a table with items
 # Getting Started with item-table
 
 this package has been published to npm as `item-table-jsoncummings`
+import `ItemTable` from the package.
+the table will fill the width of the parent container.
+populate it with an array of objects with the keys `name`, `device`, `path`, & `status` passed into the itemsArray prop as below
+
+```
+filesArray = [
+{ name: 'vishanti.exe', device: 'Strange', path: '\\Device\\SanctumSantorum\\Floor4\\vishanti.exe', status: 'scheduled' },
+{ name: 'webShooter.exe', device: 'SpiderMan', path: '\\Device\\Queens\\Thiwp\\webshooter.exe', status: 'available' },
+];
+
+...
+
+<ItemTable itemsArray={filesArray}/>
+```
 
 
 
