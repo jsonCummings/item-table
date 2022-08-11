@@ -15,20 +15,20 @@ export interface ItemTableObject {
 
 const ItemTable = (props: ItemTableProps) => {
   const [itemsArray, setItems] = useState(props.itemsArray);
-  const [selectedItems, setSelectedItems] = useState([] as ItemTableObject[]);
+  const [selectedItemsCount, setSelectedItemsCount] = useState(0);  
 
   const allSelected = () => {
-    return itemsArray.every((item => item?.checked && item.checked))
+    return itemsArray.length == selectedItemsCount;
   }
-  const someSelected = () => {
-    return !!(selectedItems.length && (itemsArray.length !== selectedItems.length));
+  const someSelected = () => {    
+    return (itemsArray.length !== selectedItemsCount) && (selectedItemsCount !== 0);
   }
   const indeterminateState = useCallback( el => {
     if (el && someSelected()) {
         el.indeterminate = someSelected();
     } 
     return false;
-  }, [selectedItems]);
+  }, [selectedItemsCount]);
 
   const checkIfAvailable = (itemStatus: string) => {
     return itemStatus.toLowerCase().indexOf('available') > -1;
@@ -41,47 +41,49 @@ const ItemTable = (props: ItemTableProps) => {
           return {...item, checked: false};
         })
       ))
-      setSelectedItems([]);
+      setSelectedItemsCount(0);
     } else {
         setItems(items => (
             items.map( item => {
                 return {...item, checked: true};
             })
         ))
-        setSelectedItems(itemsArray);
+        setSelectedItemsCount(itemsArray.length);
     }
   }
 
   const displayNumberSelected = useCallback(() => {
-    const length = selectedItems.length;
+    const length = selectedItemsCount;
     if (length === 0){
         return 'None Selected';
     } else {
         return `${length} Selected`;
     }
-  }, [selectedItems, itemsArray]);
+  }, [selectedItemsCount, itemsArray]);
 
   const handleCheckEvent = (item: ItemTableObject) => {
     const {name, checked} = item;
     setItems(items => (
       items.map( item => {
         if (item.name === name) {
-          return item?.checked ? {...item, checked: !checked} : {...item, checked: true};
+          if (item?.checked && item.checked) {
+            setSelectedItemsCount(selectedItemsCount - 1);
+            return {...item, checked: !checked} ;
+          } else {
+            setSelectedItemsCount(selectedItemsCount + 1);
+            return {...item, checked: true};
+          }
         } else {
           return {...item};
         }
       })
     ))
-    if (selectedItems.length > 0 && (selectedItems.findIndex(existing => existing.name === item.name) > -1)) {
-      setSelectedItems(selectedItems.filter( existing => existing.name !== item.name));
-    } else {
-      setSelectedItems(items => [...items, item]);
-    }
   }
 
   const downloadSelected = () => {
     // check if it can be downloaded, alert path & device
-    if (selectedItems.length >= 1) {
+    if (selectedItemsCount >= 1) {
+      let selectedItems = itemsArray.filter(item => item?.checked && item.checked);
       if (selectedItems.every(((item: ItemTableObject) => checkIfAvailable(item.status)))){
         let windowString = selectedItems.map((item => `path: ${item.path} device: ${item.device}\n`));
         alert(windowString);
